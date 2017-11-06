@@ -1,0 +1,7 @@
+package com.topkst.gateway.dao;
+
+public interface EnrollBeaconService {
+
+	public List<EnrollBeacon> center_getEnrollBeaconList(String center_code);
+	
+}

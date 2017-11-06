@@ -1,0 +1,8 @@
+package com.topkst.sb3_DAO;
+
+import com.topkst.sb3_DTO.Beacon_scan;
+
+public interface beaconDAO {
+	public void scanDao(Beacon_scan beacon_scan);
+
+}

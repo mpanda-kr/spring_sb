@@ -1,0 +1,9 @@
+INDEX VERSION 1.130+D:\KST02\sb3_workplace\.metadata\.plugins\org.eclipse.jdt.core
+1507401304.index
+2886021101.index
+1138329970.index
+4118651682.index
+2031676480.index
+1033710642.index
+208116738.index
+2617759613.index

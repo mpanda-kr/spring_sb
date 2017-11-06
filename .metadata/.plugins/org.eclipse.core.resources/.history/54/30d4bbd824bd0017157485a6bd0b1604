@@ -1,0 +1,9 @@
+package com.topkst.beacon.DTO;
+
+public class Enroll_beacon {
+	private String enroll_beacon_uuid;
+	
+	public Enroll_beacon() {}
+
+
+}

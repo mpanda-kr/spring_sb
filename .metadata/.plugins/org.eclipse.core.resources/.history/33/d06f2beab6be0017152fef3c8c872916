@@ -1,0 +1,5 @@
+package com.topkst.gateway;
+
+public class ScanBeaconDAO {
+
+}

@@ -1,0 +1,166 @@
+package com.topkst.gateway;
+
+import java.io.IOException;
+import java.sql.Time;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.topkst.gateway.dao.EnrollBeaconService;
+import com.topkst.gateway.dto.EnrollBeacon;
+import com.topkst.gateway.dto.ScanBeacon;
+
+/**
+ * Handles requests for the application home page.
+ */
+@Controller
+public class HomeController {
+
+	@Autowired
+	EnrollBeaconService beaconService;
+
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+
+	/**
+	 * Simply selects the home view to render by returning its name.
+	 */
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public String home(Locale locale, Model model) {
+		logger.info("Welcome home! The client locale is {}.", locale);
+
+		Date date = new Date();
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+
+		String formattedDate = dateFormat.format(date);
+
+		model.addAttribute("serverTime", formattedDate);
+
+		return "home";
+	}
+
+	// 유효비콘 서버 > 게이트웨이
+	@RequestMapping(value = "center_enrollbeacon_select")
+	@ResponseBody
+	public List<EnrollBeacon> enroll_list(HttpServletRequest request, Model model) {
+
+		String center_code = "2109059_01";
+		// center_id = (String)request.getParameter("center_id");
+
+		System.out.println("[" + center_code + "] 센터의 유효 비콘 값");
+		List<EnrollBeacon> enroll_beacon_list = beaconService.center_getEnrollBeaconList(center_code);
+
+		return enroll_beacon_list;
+
+	}
+
+	@RequestMapping(value = "/saveChartConfig")
+	public @ResponseBody String processSaveChartConfig(@RequestBody String json)
+			throws JsonParseException, JsonMappingException, IOException {
+		Map<String, Object> jsonToMap = new ObjectMapper().readValue(json, Map.class);
+		String templateName = (String) jsonToMap.get("templateName"); // here you get the parameters
+		return templateName; // For example
+	}
+
+	// 게이트웨이 json 데이터 > 서버
+	@RequestMapping(value = "enrollbeacon_insert")
+	@ResponseBody
+	public String scan_beacon(ScanBeacon scanBeacon, Model model) throws org.json.simple.parser.ParseException {
+		// public String beacon_sacn(HttpServletRequest request, Model model) throws
+		// org.json.simple.parser.ParseException {
+
+		String jsonInfo = "{\"enroll_beacon\": [ { \"gateway_id\" : \"2109059_01_G0_01\", \"center_id\" : \"2109059_01\", "
+				+ "\"cratedate\" : \"2017-10-23\",\"createtime\" :  \"18:26:17\",\"mac_address\" : \"ea:58:da:6d:e4:34\",\"uuid\" "
+				+ ":\"91fe354da86b4c5aa156b6c20707b204\",\"major\" :21332,\"minor\" : 20302,\"rssi\" : 69,\"tx_power\" : -91}, "
+				+ "{ \"gateway_id\" : \"2109059_01_G0_01\", \"center_id\" : \"2109059_01\", \"cratedate\" : \"2017-10-24\",\"createtime\" :  "
+				+ "\"18:26:17\",\"mac_address\" : \"ea:58:da:6d:e4:34\",\"uuid\" :\"91fe354da86b4c5aa156b6c20707b204\",\"major\" :21332,\"minor\" "
+				+ ": 20302,\"rssi\" : 69,\"tx_power\" : -91},{ \"gateway_id\" : \"2109059_01_G0_01\", \"center_id\" : \"2109059_01\", \"cratedate\" : \"2017-10-25\","
+				+ "\"createtime\" :  \"18:26:17\",\"mac_address\" : \"ea:58:da:6d:e4:34\",\"uuid\" :\"91fe354da86b4c5aa156b6c20707b204\",\"major\" :21332,\"minor\" :"
+				+ " 20302,\"rssi\" : 69,\"tx_power\" : -91}\n" + "]}";
+
+		JSONParser jsonParser = new JSONParser();
+
+		// JSON데이터를 넣어 JSON Object 로 만들어 준다.
+		JSONObject jsonObject = (JSONObject) jsonParser.parse(jsonInfo);
+
+		// books의 배열을 추출
+		JSONArray bookInfoArray = (JSONArray) jsonObject.get("enroll_beacon");
+
+		ScanBeacon beacon = new ScanBeacon();
+		System.out.println("* enroll_beacon *");
+
+		for (int i = 0; i < bookInfoArray.size(); i++) {
+
+			System.out.println("= enroll_beacon" + i + " ===========================================");
+
+			// 배열 안에 있는것도 JSON형식 이기 때문에 JSON Object 로 추출
+			JSONObject bookObject = (JSONObject) bookInfoArray.get(i);
+
+			// JSON name으로 추출
+			String gateway = (String) bookObject.get("gateway");
+			System.out.println("enroll_beacon: gateway==>" + gateway);
+			beacon.setGateway(gateway);
+			
+			String center = (String) bookObject.get("center");
+			System.out.println("enroll_beacon: center==>" + center);
+			beacon.setCenter(center);
+			
+			Object cratedate =  bookObject.get("cratedate");
+			System.out.println("enroll_beacon: cratedate==>" + (cratedate);
+			beacon.setCratedate((Date) cratedate);
+			
+			Object createtime =  bookObject.get("createtime");
+			System.out.println("enroll_beacon: createtime==>" + createtime);
+			beacon.setCreatetime((Time) createtime);
+			
+			String mac_address = (String) bookObject.get("mac_address");
+			System.out.println("enroll_beacon: mac_address==>" + mac_address);
+			beacon.setMac_address(mac_address);
+			
+			String uuid = (String) bookObject.get("uuid");
+			System.out.println("enroll_beacon: uuid==>" + uuid);
+			beacon.setUuid(uuid);
+
+			int major = (Integer) bookObject.get("major");
+			System.out.println("enroll_beacon: major==>" + major);
+			beacon.setMajor(major);
+
+			int minor = (Integer) bookObject.get("minor");
+			System.out.println("enroll_beacon: minor==>" + minor);
+			beacon.setMinor(minor);
+
+			int rssi = (Integer) bookObject.get("rssi");
+			System.out.println("enroll_beacon: rssi==>" + rssi);
+			beacon.setRssi(rssi);
+
+			int tx_power = (Integer) bookObject.get("tx_power");
+			System.out.println("enroll_beacon: tx_power==>" + tx_power);
+			beacon.setTx_power(tx_power);
+			
+
+		}
+
+		return "home";
+	}
+
+}

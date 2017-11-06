@@ -1,0 +1,12 @@
+package com.topkst.gateway.dao;
+
+import com.topkst.gateway.dto.ScanBeacon;
+
+public class ScanBeaconDAO {
+
+	public static void scanDao(ScanBeacon beacon) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

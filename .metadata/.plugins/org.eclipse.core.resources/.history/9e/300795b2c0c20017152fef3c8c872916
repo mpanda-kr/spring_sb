@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.topkst.beacon.mapper">
+
+	<select id="center_enrollbeaconList" parameterType="java.util.Map"
+		resultType="com.topkst.gateway.dto.EnrollBeacon">
+		SELECT * FROM smartbus3_demo.beacon where center_code = #{center_code} and beacon_use = '원아 배정';
+	</select>
+
+	<insert id="scanBeacon_isert" parameterType="com.topkst.gateway.dto.ScanBeacon">
+		INSERT INTO smartbus3_demo.erollbeacon_to_gateway
+		(gateway,center,createtime,mac_address,uuid,major,minor,rssi,tx_power)
+		VALUES (#{gateway},#{center},#{createtime},#{mac_address},#{uuid},#{major},#{minor},#{rssi},#{tx_power});
+	</insert>
+
+</mapper>
+
+

@@ -1,0 +1,81 @@
+package com.topkst.beacon;
+
+import java.sql.Time;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.topkst.beacon.DAO.beaconDAO;
+import com.topkst.beacon.DTO.Beacon_scan;
+
+/**
+ * Handles requests for the application home page.
+ */
+@Controller
+public class HomeController 
+{
+	@Autowired
+	beaconDAO beacon_dao;
+	
+	//Beacon_scan beacon_scan;
+	
+	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	
+	/**
+	 * Simply selects the home view to render by returning its name.
+	 */
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public String home(Locale locale, Model model) {
+		logger.info("Welcome home! The client locale is {}.", locale);
+		
+		Date date = new Date();
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+		
+		String formattedDate = dateFormat.format(date);
+		
+		model.addAttribute("serverTime", formattedDate );
+		
+		return "home";
+	}
+	
+	
+	 @RequestMapping(value="test")	
+	   public String beacon_sacn(Beacon_scan beacon_scan,Model model) throws ParseException {
+		 //  String mac_addr;
+		 //  mac_addr = request.getParameter("mac_addr");
+		 //  System.out.println(mac_addr+"넘어온 값");		 
+		 
+		 
+		 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		 Date parsed = format.parse("2017-10-23");
+		 java.sql.Date sql = new java.sql.Date(parsed.getTime());
+		 
+		 String s = "18:26:17";
+		 SimpleDateFormat sdf = new SimpleDateFormat(/* your date format string here */);
+		 long ms = sdf.parse(s).getTime();
+		 Time t = new Time(ms);
+
+		  Beacon_scan test = new Beacon_scan();
+		  test.setCreatedate(sql);	
+		  test.setCreatetime(t);
+		  
+		
+		  beacon_dao.scanDao(test);		   
+		  
+		   return "test";
+	      
+	   }
+	
+}

@@ -1,0 +1,17 @@
+package com.topkst.gateway.dto;
+
+import java.sql.Date;
+import java.sql.Time;
+
+public class ScanBeacon {
+	private String gateway;
+	private String center;
+	private Date cratedate;
+	private Time createtime;
+	private String mac_address;
+	private String uuid;
+	private int major;
+	private int minor;
+	private int	rssi;
+	private int tx_power;
+}

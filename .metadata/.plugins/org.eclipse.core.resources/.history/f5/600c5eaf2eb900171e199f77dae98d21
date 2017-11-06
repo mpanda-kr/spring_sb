@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.topkst.sb3.dao.mapper">
+
+<insert id = "beacon_scan" parameterType="com.topkst.beacon.DTO.Beacon_scan">
+  <!--      INSERT INTO bluetooth_scan_log_sv (createdate,createtime,detailtime,mac_address,uuid,major,minor,rssi,tx_power)  -->
+   <!--     VALUES (#{createdate},#{createtime},#{detailtime},#{mac_address},#{uuid},#{major},#{minor},#{rssi},#{tx_power}) -->
+      
+<!--       insert into bluetooth_scan_log_sv (createdate,createtime,detailtime,mac_address,uuid,major,minor,rssi,tx_power) values  -->
+<!-- 	('2017-10-23','18:26:17.365586','18:26:17.365586','d0:95:c7:04:85:f1','6a60f18a11e590f70002a5d5c51b0609',21332,20302,69,-91); -->
+   </insert>
+
+</mapper>

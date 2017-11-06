@@ -1,0 +1,68 @@
+package com.topkst.sb3_DTO;
+
+public class Beacon_scan {
+
+	private  String mac_address;
+	private String uuid;
+		
+	private int major;
+	private int minor;
+	private int rssi;
+	private int tx_power;
+		
+		public Beacon_scan(String mac_addrss, String uuid,int major,int minor,int rssi,int tx_power) {
+			this.mac_address = mac_address;
+			this.uuid = uuid;
+			this.major = major;
+			this.minor = minor;
+			this.rssi = rssi;
+			this.tx_power = tx_power;
+		}
+		
+		public int getMajor() {
+			return major;
+		}
+
+		public void setMajor(int major) {
+			this.major = major;
+		}
+
+		public int getMinor() {
+			return minor;
+		}
+
+		public void setMinor(int minor) {
+			this.minor = minor;
+		}
+
+		public int getRssi() {
+			return rssi;
+		}
+
+		public void setRssi(int rssi) {
+			this.rssi = rssi;
+		}
+
+		public int getTx_power() {
+			return tx_power;
+		}
+
+		public void setTx_power(int tx_power) {
+			this.tx_power = tx_power;
+		}
+
+		public String getMac_address() {
+			return mac_address;
+		}
+		public void setMac_address(String mac_address) {
+			this.mac_address = mac_address;
+		}
+		public String getUuid() {
+			return uuid;
+		}
+		public void setUuid(String uuid) {
+			this.uuid = uuid;
+		}
+		
+		
+}

@@ -1,0 +1,19 @@
+package com.topkst.beacon.DTO;
+
+import java.util.Date;
+
+public class Beacon_scan {
+
+	private Date createdate;
+	
+	private Date createtime;
+	
+	private String detailtime
+	
+	
+	public Beacon_scan() {}
+	
+		
+		
+		
+}

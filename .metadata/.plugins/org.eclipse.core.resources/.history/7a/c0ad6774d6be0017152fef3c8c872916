@@ -1,0 +1,11 @@
+package com.topkst.gateway.dto;
+
+public class EnrollBeacon {
+	private String beacon_mac;
+	private String beacon_uuid;
+	private int beacon_major;
+	private int beacon_minor;
+	
+	
+	
+}

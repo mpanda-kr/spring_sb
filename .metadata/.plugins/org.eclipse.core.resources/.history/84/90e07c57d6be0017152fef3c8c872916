@@ -1,0 +1,29 @@
+package com.topkst.gateway.dto;
+
+public class EnrollBeacon {
+	private String beacon_mac;
+	private String beacon_uuid;
+	
+	public EnrollBeacon() {	}
+		
+	public EnrollBeacon(String beacon_mac, String beacon_uuid) {
+		super();
+		this.beacon_mac = beacon_mac;
+		this.beacon_uuid = beacon_uuid;
+	}
+	
+	public String getBeacon_mac() {
+		return beacon_mac;
+	}
+	public void setBeacon_mac(String beacon_mac) {
+		this.beacon_mac = beacon_mac;
+	}
+	public String getBeacon_uuid() {
+		return beacon_uuid;
+	}
+	public void setBeacon_uuid(String beacon_uuid) {
+		this.beacon_uuid = beacon_uuid;
+	}
+	
+	
+}

@@ -1,0 +1,13 @@
+package com.topkst.gateway.dao;
+
+import java.util.List;
+
+import com.topkst.gateway.dto.EnrollBeacon;
+
+public interface EnrollBeaconService {
+
+	public List<EnrollBeacon> center_getEnrollBeaconList(String center_code);
+
+	public List<EnrollBeacon> center_getEnrollBeacon(String center_code);
+	
+}

@@ -1,0 +1,8 @@
+package com.topkst.beacon.DAO;
+
+import java.util.List;
+import java.util.Map;
+
+public interface enrollDAO {
+	public List<enrollDAO> center_selectBeaconList (Map<String, Object>map);
+}

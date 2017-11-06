@@ -1,0 +1,6 @@
+INDEX VERSION 1.4+D:\KST02\sb3_workplace\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+208116738.index
+1138329970.index
+1033710642.index
+2727276818.index
+2031676480.index

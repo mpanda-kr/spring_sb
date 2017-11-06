@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aop-reference-model>
+<aop-project name="sb3_beacon"/>
+<aop-project name="sg_example"/>
+<aop-project name="sggo_example"/>
+</aop-reference-model>

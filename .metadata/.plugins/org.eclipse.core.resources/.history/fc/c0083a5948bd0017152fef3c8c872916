@@ -1,0 +1,19 @@
+package com.topkst.gateway.dao;
+
+import java.util.List;
+import java.util.Map;
+
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+
+public class EnrollBeaconDAOImpl {
+
+	@Autowired
+	private SqlSessionTemplate sqlSession;
+
+	public List<EnrollBeaconDAO> center_selectEnrollBeaconList(Map<String, Object> map) {
+		System.out.println("enrollDAOImpl µé¾î¿È");
+		return sqlSession.selectList("com.topkst.beacon.mapper.center_enrollList",map);
+	}
+
+}
